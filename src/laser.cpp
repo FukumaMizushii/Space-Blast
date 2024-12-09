@@ -1,0 +1,38 @@
+#include "laser.hpp"
+#include<iostream>
+
+Laser::Laser(Vector2 position, int speed)
+{
+    this -> position = position ; 
+    this -> speed = speed ; 
+    active = true ; 
+}
+void Laser::Draw(){
+    if(active && speed == -6) 
+        DrawRectangle(position.x, position.y, 5, 20, YELLOW);
+    else if(active && speed == 4)
+        DrawCircle(position.x, position.y, 4.0f, RED) ; 
+    else if(active && speed == 10)
+        DrawRectangle(position.x, position.y, 5, 20, GOLD);
+    else
+        DrawRectangle(position.x, position.y, 5, 20, speed == 6 ? GREEN : RED);
+}
+
+Rectangle Laser::getRect()
+{   
+    Rectangle rect;
+    rect.x = position.x;
+    rect.y = position.y;
+    rect.width = 4;
+    rect.height = 15;
+    return rect;
+}
+
+void Laser::Update(){
+    position.y += speed ; 
+        if (active){
+            if(position.y > GetScreenHeight() || position.y < 0 ){
+                active=  false ; 
+            }
+        }
+}
